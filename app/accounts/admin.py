@@ -7,11 +7,11 @@ admin.site.register(User)
 # Register the UserProfile model in the admin panel
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'address', 'city', 'state', 'zip_code', 'occupation')
-    search_fields = ('user__name', 'address', 'city', 'state', 'zip_code', 'occupation')
+    list_display = ('user', 'address', 'city', 'occupation')
+    search_fields = ('user__name', 'address', 'city',  'occupation')
     fieldsets = (
         (None, {
-            'fields': ('user', 'address', 'city', 'state', 'zip_code')
+            'fields': ('user', 'address', 'city')
         }),
         ('Occupation and Financial Information', {
             'fields': ('occupation', 'income', 'monthly_expenses')

@@ -29,8 +29,6 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('address', models.CharField(blank=True, max_length=255)),
                 ('city', models.CharField(blank=True, max_length=255)),
-                ('state', models.CharField(blank=True, max_length=255)),
-                ('zip_code', models.CharField(blank=True, max_length=20)),
                 ('occupation', models.CharField(blank=True, max_length=255)),
                 ('income', models.DecimalField(blank=True, decimal_places=2, max_digits=10)),
                 ('monthly_expenses', models.DecimalField(blank=True, decimal_places=2, max_digits=10)),
