@@ -7,5 +7,5 @@ app_name = 'intro'
 
 
 urlpatterns =[
-    path('dashboard/',views.welcome,name='dashboard'),
+    path('dashboard/',views.home,name='dashboard'),
 ]

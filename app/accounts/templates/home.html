@@ -81,24 +81,31 @@
       </div>
 
       <div class="feature feature--3">
-        <p>تراکنش جدید</p>
-        <form action="" method="post">
-          <input type="text" >
-          <input type="text">
-          <input type="text">
-          <button type="submit">ثبت</button>
+        <p>خرید جدید</p>
+        <form action = "" method = "POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="exampleInputEmail1">نام تراکنش</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="یک اسم انتخاب کنید">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">مبلغ</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="برای مثال 2 میلیون تومان">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">هدف ذخیره سازی</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="برای مثال خرید دوچرخه">
+          </div>
+          <button type="submit" class="btn btn-primary">ثبت</button>
         </form>
       </div>
       <div class="feature feature--4">
-        <form action="" method="post">
-          <p>بودجه جدید</p>
-          <input type="text" placeholder="نام">
-          <input type="text" placeholder="مبلغ">
-          <input type="text" placeholder="هدف ذخیره سازی">
-          <button type="submit">ثبت</button>
-        </form>
+        <form action="/manage-budget/" method="post" class="sb-form sb-form__budget">
+          {% csrf_token %}
+          {{ form }}
+          <input type="submit" value="ثبت">
+      </form>
       </div>
-
 
     </section>
 
