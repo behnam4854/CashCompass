@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <title>سرمایه بان || داشبورد</title>
+  
+  {% comment %} <link rel="stylesheet" href="styles.css"> {% endcomment %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+</head>
+
+<body>
+
+
+  <!-- Main content -->
+  <main class="sb-main-dashboard">
+      <!-- Navigation bar -->
+    <nav>
+      <div class="nav__brand">
+        <img src="../static/imgs/logo.png" class="nav__brand-img" alt="">
+      </div>
+      <ul class="nav__main">
+        <li><a href="#">پروفایل</a></li>
+        <li><a href="#">تراکنش ها</a></li> 
+        <li><a href="#">پس انداز ها</a></li>
+      </ul>
+      <ul class="nav__footer">
+        <li><a href="#">خروج</a></li>
+      </ul>
+    </nav>
+
+    <!-- Features section -->
+    <section class="features">
+      <p class="feature--head">بهنام امینی ساردویی</p>
+      <div class="feature feature--1">
+        <div class="budget">
+          <p class="budget-title">بودجه</p>
+          <p class="budget-title">5000000000000 تومان</p>
+        </div>
+        <div class="budget">
+          <p class="budget-title">بودجه</p>
+          <p class="budget-title">50000 تومان</p>
+        </div>
+        <div class="budget">
+          <p class="budget-title">بودجه</p>
+          <p class="budget-title">50000000 تومان</p>
+        </div>
+      </div>
+
+      <div class="feature feature--2">
+        <!-- <img src="tracker.png">   -->
+        <p>تراکنش های اخیر</p>
+        <hr class="feature--line">
+        <br>
+        <ul class="trans-list">
+          <li class="trans-list__item">
+            <p>25000 <span>تومان</span></p>
+            <p>پوشاک و لباس</p>
+          </li>
+          <li class="trans-list__item">
+            <p>2558000 <span>تومان</span></p>
+            <p>پوشاک و لباس</p>
+          </li>
+          <li class="trans-list__item">
+            <p>25000 <span>تومان</span></p>
+            <p>پوشاک و لباس</p>
+          </li>
+          <li class="trans-list__item">
+            <p>25000 <span>تومان</span></p>
+            <p>پوشاک و لباس</p>
+          </li>
+          <li class="trans-list__item">222222222</li>
+          <li class="trans-list__item">7777777777</li>
+          <li class="trans-list__item">65864545</li>
+          <li class="trans-list__item">4564564564</li>
+          <li class="trans-list__item">45687841</li>
+          <li class="trans-list__item">21327878</li>
+          <li class="trans-list__item">45654645</li>
+        </ul>
+        <p class="trans-more">ادامه</p>
+      </div>
+
+      <div class="feature feature--3">
+        <p>تراکنش جدید</p>
+        <form action="" method="post">
+          <input type="text" >
+          <input type="text">
+          <input type="text">
+          <button type="submit">ثبت</button>
+        </form>
+      </div>
+      <div class="feature feature--4">
+        <form action="" method="post">
+          <p>بودجه جدید</p>
+          <input type="text" placeholder="نام">
+          <input type="text" placeholder="مبلغ">
+          <input type="text" placeholder="هدف ذخیره سازی">
+          <button type="submit">ثبت</button>
+        </form>
+      </div>
+
+
+    </section>
+
+  </main>
+  
+  <!-- Page footer -->
+  <footer>
+    <p>&copy; سرمایه بان 1402</p>  
+  </footer>
+
+</body>
+</html>
