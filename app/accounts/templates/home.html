@@ -100,9 +100,27 @@
         </form>
       </div>
       <div class="feature feature--4">
-        <form action="/manage-budget/" method="post" class="sb-form sb-form__budget">
-          {% csrf_token %}
+        <form action="" method="post" class="sb-form sb-form__budget">
+          {% comment %} {% csrf_token %}
           {{ form }}
+          <input type="submit" value="ثبت"> {% endcomment %}
+          {% csrf_token %}
+          {{ form.non_field_errors }}
+          <div class="fieldWrapper">
+              {{ form.BudgetName.errors }}
+              <label for="{{ form.BudgetName.id_for_label }}">نام بودجه</label>
+              {{ form.BudgetName }}
+          </div>
+          <div class="fieldWrapper">
+              {{ form.BudgetAmount.errors }}
+              <label for="{{ form.BudgetAmount.id_for_label }}">مقدار بودجه</label>
+              {{ form.BudgetAmount }}
+          </div>
+          <div class="fieldWrapper">
+              {{ form.BudgetGoal.errors }}
+              <label for="{{ form.BudgetGoal.id_for_label }}">هدف مالی</label>
+              {{ form.BudgetGoal }}
+          </div>
           <input type="submit" value="ثبت">
       </form>
       </div>
