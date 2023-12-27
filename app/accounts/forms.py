@@ -15,3 +15,6 @@ class BudgetFormModel(forms.ModelForm):
     class Meta :
         model = Budget
         fields = ["name", "income", "savings_goal"]
+
+
+

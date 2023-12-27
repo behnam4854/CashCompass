@@ -9,10 +9,10 @@ class Transaction(models.Model):
     User transactions affecting their budget tracking
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE)  
-    budget = models.ForeignKey(Budget, on_delete=models.CASCADE) 
+    budget = models.ForeignKey(Budget, on_delete=models.CASCADE, null=True) 
 
-    amount = models.DecimalField(max_digits=10, decimal_places=2)  
-    date = models.DateField()
+    amount = models.DecimalField(max_digits=10, decimal_places=0)  
+    date = models.DateTimeField(blank=True,null=True)
     description = models.CharField(max_length=255)
 
     category = models.ForeignKey(BudgetCategory, on_delete=models.SET_NULL, null=True)

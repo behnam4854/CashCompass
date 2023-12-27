@@ -26,7 +26,7 @@
         <li><a href="#">پس انداز ها</a></li>
       </ul>
       <ul class="nav__footer">
-        <li><a href="#">222خروج</a></li>
+        <li><a href="#">خروج</a></li>
       </ul>
     </nav>
 
@@ -54,13 +54,14 @@
         <hr class="feature--line">
         <br>
         <ul class="trans-list">
-          {% for transaction in transaction_list %}
-            <li class="trans-list__item">
+          {% for transaction in transactions %}
+            <li>
               <p>{{ transaction.amount }} <span>تومان</span></p>
               <p>{{ transaction.description }}</p>
             </li>
+            <hr>
           {% endfor %}
-        <p class="trans-more">ادامه</p>
+        <p class="trans-more">111ادامه</p>
       </div>
 
       <div class="feature feature--3">
