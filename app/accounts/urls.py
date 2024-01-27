@@ -7,5 +7,5 @@ app_name = 'intro'
 
 
 urlpatterns =[
-    path('dashboard/',views.DashboardView,name='dashboard'),
+    path('dashboard/',views.DashboardView.as_view(),name='dashboard'),
 ]

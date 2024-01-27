@@ -5,32 +5,57 @@ from transactions.forms import TransactionForm
 from django.views.generic.edit import FormView
 from budgets.models import Budget
 from transactions.models import Transaction
+from django.views.generic import View
+
 
 # from django.views.generic import DetailView, ListView
 # from django.views.generic.edit import ModelFormMixin
 # from django.views.generic.edit import FormMixin
 
 
-def DashboardView(request):
 
-    transactions = Transaction.objects.filter(user=request.user)[:15]
+class DashboardView(View):
+
+    context = {}
+
+    def get(self,request):
+        transactions = Transaction.objects.filter(user=request.user)[:15]
+        budgetDetail = Budget.objects.filter(user=request.user).last()
+        form = TransactionForm()
+        self.context['form'] = form
+        self.context['transaction_list'] = transactions 
+        self.context['budget'] = budgetDetail
+        return render(request,'home.html',self.context)
     
-    if request.method == 'POST': 
+    def post(self,request):
         form = TransactionForm(request.POST)
         if form.is_valid():
-            amount = form.cleaned_data['amount']
-            description = form.cleaned_data['description']
-            p = Transaction(user = request.user, amount=amount,description=description)
-            p.save()
-    else:
-        form = TransactionForm()
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+        self.context['form'] = form
+        return render(request, 'home.html', self.context)
+    
+# def DashboardView(request):
 
-    context = {
-        'transaction_list': transactions, 
-        'form': form
-    }
+#     transactions = Transaction.objects.filter(user=request.user)[:15]
+    
+#     if request.method == 'POST': 
+#         form = TransactionForm(request.POST)
+#         if form.is_valid():
+#             amount = form.cleaned_data['amount']
+#             description = form.cleaned_data['description']
+#             p = Transaction(user = request.user, amount=amount,description=description)
+#             p.save()
+#     else:
+#         form = TransactionForm()
 
-    return render(request, 'home.html', context)
+#     context = {
+#         'transaction_list': transactions, 
+#         'form': form
+#     }
+
+#     return render(request, 'home.html', context)
 
 
 # def home(request):

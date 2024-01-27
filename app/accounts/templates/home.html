@@ -3,7 +3,8 @@
 {% load static %}
 <head>
   <title>سرمایه بان || داشبورد</title>
-  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
   {% comment %} <link rel="stylesheet" href="styles.css"> {% endcomment %}
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   <script src="{% static 'js/persian-datepicker.js' %}"></script>
@@ -26,25 +27,25 @@
         <li><a href="#">پس انداز ها</a></li>
       </ul>
       <ul class="nav__footer">
-        <li><a href="#">222خروج</a></li>
+        <li><a href="#">خروج</a></li>
       </ul>
     </nav>
 
     <!-- Features section -->
     <section class="features">
-      <p class="feature--head">بهنام امینی ساردویی</p>
+      <p class="feature--head">{{ budget.user }}</p>
       <div class="feature feature--1">
         <div class="budget">
-          <p class="budget-title">بودجه</p>
-          <p class="budget-title">5000000000000 تومان</p>
+          <p class="budget-title">نام بودجه</p>
+          <p class="budget-title">{{ budget.name }} </p>
         </div>
         <div class="budget">
-          <p class="budget-title">بودجه</p>
-          <p class="budget-title">50000 تومان</p>
+          <p class="budget-title">مبلغ اولیه</p>
+          <p class="budget-title">{{ budget.income }} تومان</p>
         </div>
         <div class="budget">
-          <p class="budget-title">بودجه</p>
-          <p class="budget-title">50000000 تومان</p>
+          <p class="budget-title">هدف</p>
+          <p class="budget-title">{{ budget.savings_goal }} تومان</p>
         </div>
       </div>
 
@@ -63,22 +64,25 @@
         <p class="trans-more">ادامه</p>
       </div>
 
-      <div class="feature feature--3">
-        <p>خرید جدید</p>
-        <form action = "" method = "POST">
-          {% csrf_token %}
-          {{ form.non_field_errors }}
-          <div class="fieldWrapper">
-              {{ form.amount.errors }}
-              <label for="{{ form.amount.id_for_label }}">مبلغ خرید</label>
-              {{ form.amount }}
-          </div>
-          <div class="fieldWrapper">
-              {{ form.description.errors }}
-              <label for="{{ form.description.id_for_label }}">دسته بندی</label>
-              {{ form.description }}
-          </div>
-          <input type="submit" value="ثبت">
+      <div class="feature feature--3 p-3">
+        <p class="text-center font-weight-bolder">خرید جدید</p>
+        <hr>
+        {% load crispy_forms_tags %}
+        <form method="post">
+            {%csrf_token%}
+            {%if form%}
+        
+            <div class="row bg-white">
+                {%for field in form%}
+                <div class="col-md-6 p-2 text-right" dir="rtl">{{field|as_crispy_field}}</div>
+                {%endfor%}
+            </div>
+
+
+            <button type="submit" class="btn btn-Success">ذخیره</button>
+
+            {%endif%}
+        
         </form>
       </div>
       <div class="feature feature--4">
