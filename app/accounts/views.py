@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from .forms import BudegtForm, BudgetFormModel
 from transactions.forms import TransactionForm
 from django.views.generic.edit import FormView
-from budgets.models import Budget
+from budgets.models import Budget, BudgetCategory
 from transactions.models import Transaction
 from django.views.generic import View
 
@@ -19,12 +19,14 @@ class DashboardView(View):
     context = {}
 
     def get(self,request):
-        transactions = Transaction.objects.filter(user=request.user)[:15]
+        transactions = Transaction.objects.filter(user=request.user)[:10]
+        budgetsCats = BudgetCategory.objects.all()
         budgetDetail = Budget.objects.filter(user=request.user).last()
         form = TransactionForm()
         self.context['form'] = form
         self.context['transaction_list'] = transactions 
         self.context['budget'] = budgetDetail
+        self.context['budgetCats'] = budgetsCats
         return render(request,'home.html',self.context)
     
     def post(self,request):
@@ -33,6 +35,12 @@ class DashboardView(View):
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
+            
+            # this is for adding or subtracing the value everytime i add a value
+            addToBudget = BudgetCategory.objects.get(name=instance.category)
+            addToBudget.spent += instance.amount
+            addToBudget.save()
+
         self.context['form'] = form
         return render(request, 'home.html', self.context)
     

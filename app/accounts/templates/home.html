@@ -3,8 +3,8 @@
 {% load static %}
 <head>
   <title>سرمایه بان || داشبورد</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+  {% comment %} <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> {% endcomment %}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   {% comment %} <link rel="stylesheet" href="styles.css"> {% endcomment %}
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   <script src="{% static 'js/persian-datepicker.js' %}"></script>
@@ -50,17 +50,24 @@
       </div>
 
       <div class="feature feature--2">
-        <!-- <img src="tracker.png">   -->
-        <p>تراکنش های اخیر</p>
-        <hr class="feature--line">
-        <br>
-        <ul class="trans-list">
-          {% for transaction in transaction_list %}
-            <li class="trans-list__item">
-              <p>{{ transaction.amount }} <span>تومان</span></p>
-              <p>{{ transaction.description }}</p>
-            </li>
-          {% endfor %}
+        <p class="text-center font-weight-bolder">تراکنش های اخیر</p>
+        <hr >
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col" class="fs-6">مبلغ</th>
+              <th scope="col" class="fs-6">توضیحات</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for transaction in transaction_list %}
+            <tr>
+              <td class="fs-6">{{ transaction.amount }} <span>تومان</span></td>
+              <td class="fs-6">{{ transaction.description }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
         <p class="trans-more">ادامه</p>
       </div>
 
@@ -71,44 +78,37 @@
         <form method="post">
             {%csrf_token%}
             {%if form%}
-        
             <div class="row bg-white">
                 {%for field in form%}
                 <div class="col-md-6 p-2 text-right" dir="rtl">{{field|as_crispy_field}}</div>
                 {%endfor%}
             </div>
-
-
-            <button type="submit" class="btn btn-Success">ذخیره</button>
-
             {%endif%}
-        
+            <button type="submit"  class="btn btn-primary">ذخیره</button>
         </form>
       </div>
       <div class="feature feature--4">
-        <form action="" method="post" class="sb-form sb-form__budget">
-          {% comment %} {% csrf_token %}
-          {{ form }}
-          <input type="submit" value="ثبت"> {% endcomment %}
-          {% comment %} {% csrf_token %}
-          {{ form.non_field_errors }}
-          <div class="fieldWrapper">
-              {{ form.BudgetName.errors }}
-              <label for="{{ form.BudgetName.id_for_label }}">نام بودجه</label>
-              {{ form.BudgetName }}
-          </div>
-          <div class="fieldWrapper">
-              {{ form.BudgetAmount.errors }}
-              <label for="{{ form.BudgetAmount.id_for_label }}">مقدار بودجه</label>
-              {{ form.BudgetAmount }}
-          </div>
-          <div class="fieldWrapper">
-              {{ form.BudgetGoal.errors }}
-              <label for="{{ form.BudgetGoal.id_for_label }}">هدف مالی</label>
-              {{ form.BudgetGoal }}
-          </div>
-          <input type="submit" value="ثبت"> {% endcomment %}
-      </form>
+        <input type="number" id="numberInput">
+        <p class="text-center font-weight-bolder">دسته بندی بودجه</p>
+        <hr >
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">نام بودجه</th>
+              <th scope="col">مبلغ اولیه</th>
+              <th scope="col">خرج شده</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for transaction in budgetCats %}
+            <tr>
+              <td>{{ transaction.name }}</td>
+              <td>{{ transaction.allocated }}</td>
+              <td>{{ transaction.spent }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
 
     </section>
@@ -119,8 +119,29 @@
   <footer>
     <p>&copy; سرمایه بان 1402</p>  
     <script>
-      new PersianDatepicker(document.getElementById("transaction_date")); 
-    </script>
+
+      // Select the input element
+      function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+      const input = document.getElementById("numberInput");
+
+      input.addEventListener("input", function() {
+        let formattedNum = input.value;
+
+        // Remove commas 
+        let numericVal = parseInt(formattedNum.replace(/,/g,""));
+        this.value = numberWithCommas(this.value);
+      });
+
+      </script>
+      <script>
+        const input = document.getElementById('number'); 
+        
+        input.addEventListener('input', () => {
+          console.log('typed');
+        });
+        </script>
   </footer>
 
 </body>
