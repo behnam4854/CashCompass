@@ -18,6 +18,7 @@ class TransactionForm(forms.ModelForm):
 
         widgets = {
             'date': forms.DateInput(attrs={'type':'date'}),
+            'amount': forms.DateInput(attrs={'class':'number'}),
         }
         labels = {
             'amount':'مبلغ',
