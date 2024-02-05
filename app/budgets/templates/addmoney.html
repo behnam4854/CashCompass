@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% load template_tags %}
+
+<head>
+  <title>سرمایه بان || داشبورد</title>
+  {% comment %} <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> {% endcomment %}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  {% comment %} <link rel="stylesheet" href="styles.css"> {% endcomment %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <script src="{% static 'js/persian-datepicker.js' %}"></script>
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+
+</head>
+
+<body>
+
+  <!-- Main content -->
+  <main class="container bg-white">
+      <!-- Navigation bar -->
+    <div class="d-flex p-2 bd-highlight bg-white flex-row-reverse">
+      <div class="col-md-1 bg-black">
+        <nav>
+          <div class="nav__brand">
+            <img src="../static/imgs/logo.png" class="nav__brand-img" alt="">
+          </div>
+          <ul class="nav__main">
+            <li><a href="#">پروفایل</a></li>
+            <li><a href="#">تراکنش ها</a></li> 
+            <li><a href="#">پس انداز ها</a></li>
+          </ul>
+          <ul class="nav__footer">
+            <li><a href="#">خروج</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col-md-11 p-3">
+        <div class="col-md-12">
+          {% load crispy_forms_tags %}
+          <form method="post">
+              {%csrf_token%}
+              {%if form%}
+              <div class="row bg-white">
+                  {%for field in form%}
+                  <div class="col-md-6 p-2 text-right" dir="rtl">{{field|as_crispy_field}}</div>
+                  {%endfor%}
+              </div>
+              {%endif%}
+              <button type="submit"  class="btn btn-primary">ذخیره</button>
+          </form>
+        </div>
+        <div class="col-md-12">
+          transaction lists
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Page footer -->
+  <footer>
+    <p>&copy; سرمایه بان 1402</p>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script>
+      // Select all elements with price class
+      const priceElements = document.querySelectorAll('.price');
+      
+      // Loop through each element
+      priceElements.forEach(price => {
+      
+        // Get inner text
+        let priceText = price.innerText;
+      
+        // Regex to separate numbers 
+        let regex = /\B(?=(\d{3})+(?!\d))/g;
+      
+        // Format price with commas
+        let formatted = priceText.replace(regex, ',');  
+      
+        // Update inner text
+        price.innerText = formatted;
+      
+      });
+      </script>
+
+
+  </footer>
+
+</body>
+</html>

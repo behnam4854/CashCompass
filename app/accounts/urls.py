@@ -3,7 +3,7 @@ from . import views
 from django.contrib.admin.views.decorators import staff_member_required
 
 
-app_name = 'intro'
+app_name = 'accounts'
 
 
 urlpatterns =[
