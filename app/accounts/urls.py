@@ -8,4 +8,5 @@ app_name = 'accounts'
 
 urlpatterns =[
     path('dashboard/',views.DashboardView.as_view(),name='dashboard'),
+    path("signup/", views.SignupView.as_view(), name="signup"),
 ]

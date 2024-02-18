@@ -1,5 +1,7 @@
 from django import forms
 from budgets.models import Budget
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import get_user_model
 
 
 class BudegtForm(forms.Form):
@@ -17,4 +19,17 @@ class BudgetFormModel(forms.ModelForm):
         fields = ["name", "income", "savings_goal"]
 
 
+
+
+User = get_user_model()
+
+class SignUpForm(UserCreationForm):
+    first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
+    last_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
+    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
+    username = None
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email', 'password1', 'password2', )
 

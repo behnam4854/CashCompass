@@ -1,11 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .forms import BudegtForm, BudgetFormModel
+from .forms import BudegtForm, BudgetFormModel,SignUpForm
 from transactions.forms import TransactionForm
 from django.views.generic.edit import FormView
 from budgets.models import Budget, BudgetCategory
 from transactions.models import Transaction
 from django.views.generic import View
+
+
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
+from django.views import generic
 
 
 # from django.views.generic import DetailView, ListView
@@ -43,7 +49,45 @@ class DashboardView(View):
 
         self.context['form'] = form
         return render(request, 'home.html', self.context)
+
+class SignupView(View):
+
+    context = {}
+
+    def get(self,request):
+        form = SignUpForm()
+        self.context['form'] = form
+        return render(request,'signup.html',self.context)
     
+    def post(self,request):
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            # instance = form.save(commit=False)
+            # instance.user = request.user
+            form.save()
+        self.context['form'] = form
+        return render(request, 'signup.html', self.context)
+    
+# def SignupView(request):
+#         if request.method == 'POST':
+#             form = SignUpForm(request.POST)
+#             if form.is_valid():
+#                 form.save()
+#                 username = None
+#                 raw_password = form.cleaned_data.get('password1')
+#                 user = authenticate(password=raw_password)
+#                 login(request, user)
+#                 return redirect('home')
+#         else:
+#             form = SignUpForm()
+#         return render(request, 'signup.html', {'form': form})
+
+
+# class SignUpView(generic.CreateView):
+#     form_class = UserCreationForm
+#     success_url = reverse_lazy("login")
+#     template_name = "registration/signup.html"
+
 # def DashboardView(request):
 
 #     transactions = Transaction.objects.filter(user=request.user)[:15]

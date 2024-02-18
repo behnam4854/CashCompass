@@ -30,9 +30,7 @@ body {
 
 /* Navbar */  
 nav {
-  /* background-color: var(--bg-color-light); */
   color: #333;
-  /* padding: 18px; */
   border-radius: 5px;
   grid-column: 1/ 1;
   display: grid;
@@ -63,12 +61,12 @@ nav a {
 
 
 /* Features */
+/*toDo*/
 .features{
   display: grid;
   grid-template-columns: repeat(6, 1fr [col-start]);
   grid-row-gap: 1rem;
   grid-column-gap: 1rem;
-  /* align-items: top; */
   border-radius: 20px;
   background-color: var(--bg-color);
   grid-column: 2/ end;
@@ -128,7 +126,6 @@ nav a {
   flex-wrap: wrap;
   flex: 1;
   text-align: center;
-  /* background-color: red; */
 }
 .budget:not(:last-of-type){
   border-left: 1px solid #333;
