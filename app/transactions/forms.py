@@ -6,7 +6,7 @@ from .models import Transaction
 class TransactionForm(forms.ModelForm):
     class Meta :
         model = Transaction
-        fields = ["amount", "description", "category","budget","date"]
+        fields = ["amount", "description", "category","date"]
 
         widgets = {
             'date': forms.DateInput(attrs={'type':'date'}),
@@ -16,6 +16,6 @@ class TransactionForm(forms.ModelForm):
             'amount':'مبلغ',
             'description':'توضیحات',
             'category':'نام بودجه',
-            'budget':'نام سرمایه ',
+            # 'budget':'نام سرمایه ',
             'date':' تاریخ',
         }

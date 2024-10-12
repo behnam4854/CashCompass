@@ -1,47 +1,94 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from .forms import BudegtForm, BudgetFormModel,SignUpForm
+from .forms import BudegtForm, BudgetFormModel, SignUpForm
 from transactions.forms import TransactionForm
-from django.views.generic.edit import FormView
 from budgets.models import Budget, BudgetCategory
 from transactions.models import Transaction
 from django.views.generic import View
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.settings import api_settings
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .serializers import UserSerializer, CustomTokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+
+class UserLoginAPIView(ObtainAuthToken):
+    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
 
-from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse_lazy
-from django.views.generic import CreateView
-from django.views import generic
+# class UserRegisterAPIView(APIView):
+#     def post(self, request, *args, **kargs):
+#         serializer = UserRegisterSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             response = {
+#                 'success': True,
+#                 'user': serializer.data,
+#                 'token': Token.objects.get(user=User.objects.get(username=serializer.data['username'])).key
+#             }
+#             return Response(response, status=status.HTTP_200_OK)
+#         raise ValidationError(
+#             serializer.errors, code=status.HTTP_406_NOT_ACCEPTABLE)
 
 
-# from django.views.generic import DetailView, ListView
-# from django.views.generic.edit import ModelFormMixin
-# from django.views.generic.edit import FormMixin
+# class RegisterView(APIView):
+#     def post(self, request):
+#         serializer = UserSerializer(data=request.data)
+#         if serializer.is_valid():
+#             user = serializer.save()
+#             refresh = RefreshToken.for_user(user)
+#             return Response({
+#                 'user': serializer.data,
+#                 'refresh': str(refresh),
+#                 'access': str(refresh.access_token),
+#             }, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class RegisterView(APIView):
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+
+class UserLogoutAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args):
+        token = Token.objects.get(user=request.user)
+        token.delete()
+        return Response({"success": True, "detail": "Logged out!"}, status=status.HTTP_200_OK)
 
 
 class DashboardView(View):
-
     context = {}
 
-    def get(self,request):
+    def get(self, request):
         transactions = Transaction.objects.filter(user=request.user)[:10]
         budgetsCats = BudgetCategory.objects.all()
         budgetDetail = Budget.objects.filter(user=request.user).last()
         form = TransactionForm()
         self.context['form'] = form
-        self.context['transaction_list'] = transactions 
+        self.context['transaction_list'] = transactions
         self.context['budget'] = budgetDetail
         self.context['budgetCats'] = budgetsCats
-        return render(request,'home.html',self.context)
-    
-    def post(self,request):
+        return render(request, 'home.html', self.context)
+
+    def post(self, request):
         form = TransactionForm(request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
-            
+
             # this is for adding or subtracing the value everytime i add a value
             addToBudget = BudgetCategory.objects.get(name=instance.category)
             addToBudget.spent += instance.amount
@@ -50,16 +97,16 @@ class DashboardView(View):
         self.context['form'] = form
         return render(request, 'home.html', self.context)
 
-class SignupView(View):
 
+class SignupView(View):
     context = {}
 
-    def get(self,request):
+    def get(self, request):
         form = SignUpForm()
         self.context['form'] = form
-        return render(request,'signup.html',self.context)
-    
-    def post(self,request):
+        return render(request, 'signup.html', self.context)
+
+    def post(self, request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             # instance = form.save(commit=False)
@@ -67,7 +114,7 @@ class SignupView(View):
             form.save()
         self.context['form'] = form
         return render(request, 'signup.html', self.context)
-    
+
 # def SignupView(request):
 #         if request.method == 'POST':
 #             form = SignUpForm(request.POST)
@@ -91,7 +138,7 @@ class SignupView(View):
 # def DashboardView(request):
 
 #     transactions = Transaction.objects.filter(user=request.user)[:15]
-    
+
 #     if request.method == 'POST': 
 #         form = TransactionForm(request.POST)
 #         if form.is_valid():
@@ -121,7 +168,6 @@ class SignupView(View):
 #     return render(request,'home.html', {"form": form})
 
 
-
 # class DashboardView(FormView):
 #     template_name = "home.html"
 #     form_class = BudegtForm
@@ -147,13 +193,13 @@ class SignupView(View):
 #         p = Transaction(user = self.request.user, amount=amount,description=description)
 #         p.save()
 #         return super().form_valid(form)
-    
+
 # class DashboardView(ListView):
 #     model = Transaction
 #     context_object_name = "transactions"
 #     queryset = Transaction.objects.all()
 #     template_name = "templates/home.html"
-    
+
 #     def post(self, request, *args, **kwargs):
 #         # When the form is submitted, it will enter here
 #         self.object = None
@@ -222,4 +268,3 @@ class SignupView(View):
 #         context = super(DashboardView, self).get_context_data(**kwargs)
 #         context['form'] = TransactionForm()
 #         return context
-
