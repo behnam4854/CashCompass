@@ -1,22 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .forms import BudegtForm, BudgetFormModel,SignUpForm
+from .forms import BudegtForm, BudgetFormModel,RegisterForm
 from transactions.forms import TransactionForm
 from django.views.generic.edit import FormView
 from budgets.models import Budget, BudgetCategory
 from transactions.models import Transaction
 from django.views.generic import View
-
-
-from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse_lazy
-from django.views.generic import CreateView
-from django.views import generic
-
-
-# from django.views.generic import DetailView, ListView
-# from django.views.generic.edit import ModelFormMixin
-# from django.views.generic.edit import FormMixin
+from .models import User
 
 
 
@@ -55,16 +45,16 @@ class SignupView(View):
     context = {}
 
     def get(self,request):
-        form = SignUpForm()
+        form = RegisterForm()
         self.context['form'] = form
         return render(request,'signup.html',self.context)
     
     def post(self,request):
-        form = SignUpForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
-            # instance = form.save(commit=False)
-            # instance.user = request.user
-            form.save()
+            user = form.save()
+            # login(request, user)
+            # return redirect('home')
         self.context['form'] = form
         return render(request, 'signup.html', self.context)
     

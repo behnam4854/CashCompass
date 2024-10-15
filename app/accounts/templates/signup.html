@@ -4,29 +4,23 @@
 
 {% block content %}
 <div class="container">
-    <div class="col-md-12 d-flex justify-content-center mt-5">
-        {% comment %} <form>
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">ایمیل</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-              <div id="emailHelp" class="form-text">آدرس ایمیلی که قبلا با آن ثبت نام کرده اید.</div>
-            </div>
-            <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">پسورد</label>
-              <input type="password" class="form-control" id="exampleInputPassword1">
-            </div>
-            <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1">مرا به خاطر بسپار</label>
-            </div>
-            <button type="submit" class="btn btn-primary">ورود</button>
-          </form> {% endcomment %}
-          <form method="post">
-            {% csrf_token %}
-            {{ form }}
-            <button type="submit">Log In</button>
-          </form>
-        </form>
+    <div class="row">
+        <div class="col-md-4 justify-content-center mt-5 p-3">
+            <p class="text-center font-weight-bolder">فرم عضویت</p>
+            <hr>
+            {% load crispy_forms_tags %}
+            <form method="post">
+                {%csrf_token%}
+                {%if form%}
+                <div class="row bg-white">
+                    {%for field in form%}
+                    <div class="col-md-12 p-2 text-right" dir="rtl">{{field|as_crispy_field}}</div>
+                    {%endfor%}
+                </div>
+                {%endif%}
+                <button type="submit"  class="btn btn-primary">ذخیره</button>
+            </form>
+          </div>
     </div>
 </div>
 {% endblock %}

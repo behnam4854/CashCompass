@@ -1,165 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-{% load static %}
-{% load template_tags %}
-
+  {% load static %}
+  {% load template_tags %}
 <head>
   <title>سرمایه بان || داشبورد</title>
-  {% comment %} <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> {% endcomment %}
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  {% comment %} <link rel="stylesheet" href="styles.css"> {% endcomment %}
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-  <script src="{% static 'js/persian-datepicker.js' %}"></script>
-  <script src="{% static 'js/jquery.min.js' %}"></script>
-
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/css.gg/icons/icons.css" rel="stylesheet" />
 </head>
 
 <body>
 
-  <!-- Main content -->
-  <main class="sb-main-dashboard">
-      <!-- Navigation bar -->
-    <nav>
-      <div class="nav__brand">
-        <img src="../static/imgs/logo.png" class="nav__brand-img" alt="">
+  <div class="container sd-main-dashboard">
+    <div class="grid">
+      <div class="g-col-1 d-nav">
+        <nav>
+          <div class="nav__brand">
+            <img src="{% static "imgs/logo.png" %}" class="nav__brand-img" alt="">
+          </div>
+          <ul class="nav__main">
+            <li><i class="gg-profile"></i>&nbsp;<a href="#">پروفایل</a></li>
+            <li><i class="gg-arrow-down-o"></i>&nbsp;<a href="#">تراکنش ها</a></li>
+            <li><i class="gg-add"></i>&nbsp;<a href="#">پس انداز ها</a></li>
+          </ul>
+          <ul class="nav__footer">
+            <li><a href="#">خروج</a></li>
+          </ul>
+        </nav>
       </div>
-      <ul class="nav__main">
-        <li><a href="#">پروفایل</a></li>
-        <li><a href="#">تراکنش ها</a></li> 
-        <li><a href="#">پس انداز ها</a></li>
-      </ul>
-      <ul class="nav__footer">
-        <li><a href="#">خروج</a></li>
-      </ul>
-    </nav>
-
-    <!-- Features section -->
-    <section class="features">
-      <p class="feature--head">{{ budget.user }}</p>
-      <div class="feature feature--1">
-        <div class="budget">
-          <p class="budget-title">{{ budget.name }} </p>
-          <p class="budget-title price">{{ budget.income }} تومان</p>
-        </div>
-        <div class="budget">
-          <p class="budget-title">هدف</p>
-          <p class="budget-title price">{{ budget.savings_goal }} تومان</p>
-        </div>
-        <div class="budget">
-          <a class="btn btn-secondary" href="#">اضافه کردن پول</a>
-          
-          
-        </div>
-      </div>
-
-      <div class="feature feature--2">
-        <p class="text-center font-weight-bolder">تراکنش های اخیر</p>
-        <hr >
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col" class="fs-6">مبلغ</th>
-              <th scope="col" class="fs-6">توضیحات</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for transaction in transaction_list %}
-            <tr>
-              <td class="fs-6 price">{{ transaction.amount }} <span>تومان</span></td>
-              <td class="fs-6">{{ transaction.description }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        <p class="trans-more">ادامه</p>
-      </div>
-
-      <div class="feature feature--3 p-3">
-        <p class="text-center font-weight-bolder">خرید جدید</p>
-        <hr>
-        {% load crispy_forms_tags %}
-        <form method="post">
-            {%csrf_token%}
-            {%if form%}
-            <div class="row bg-white">
-                {%for field in form%}
-                <div class="col-md-6 p-2 text-right" dir="rtl">{{field|as_crispy_field}}</div>
-                {%endfor%}
+      <div class="g-col-11 info-container grid">
+        <div class="g-col-9 md-info-area grid">
+          <div class="g-col-12">
+            <p class="md-username"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width: 1rem;"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg><span> بهنام امینی ساردویی</span></p>
+          </div>
+          <div class="g-col-12 grid" style="background-color: white;gap: 1rem;padding: 2rem;border-radius: 2rem;">
+            <div class="g-col-auto" style="background-color: #E5E9F0;padding: 2rem 1rem;border-radius: 2rem;">
+              <div class="g-col-12 text-left">
+                <p class="md-exp__text " >500.000.000<span><img src="../static/imgs/price.png" alt=""></span></p>
+                <p class="md-exp__subtitle text-start">واریز</p>
+              </div>
+              <div class="g-col-12 text-left">
+                <p class="md-exp__text " >500.000.000<span><img src="../static/imgs/price.png" alt=""></span></p>
+                <p class="md-exp__subtitle text-start">مخارج</p>
+              </div>
+              <div class="g-col-12 text-left">
+                <p class="md-exp__text " >500.000.000<span><img src="../static/imgs/price.png" alt=""></span></p>
+                <p class="md-exp__subtitle text-start">پس انداز</p>
+              </div>
             </div>
-            {%endif%}
-            <button type="submit"  class="btn btn-primary">ذخیره</button>
-        </form>
+            
+            <div class="g-col-10" style="text-align: center;justify-content: center;align-content: center;" >چارت مخارج و واریزی ها</div>
+            
+          </div>
+          <div class="g-col-7">4</div>
+          <div class="g-col-5">
+          <p class="md-exp__title">بیشترین مخارج ماه</p>
+          <hr class="md-line">
+          <br>
+          <ul class="md-exp__list">
+            <li class="md-exp__list-item grid">
+              <div class="g-col-6">
+                <p class="md-exp__text">پوشاک و لباس</p>
+                <p class="md-exp__subtitle">152 خرید</p>
+              </div>
+              <div class="g-col-6 text-left">
+                <p class="md-exp__text " >500.000.000<span><img src="../static/imgs/price.png" alt=""></span></p>
+              </div>
+            </li>
+            <li class="md-exp__list-item grid">
+              <div class="g-col-6">
+                <p class="md-exp__text">پوشاک و لباس</p>
+                <p class="md-exp__subtitle">152 خرید</p>
+              </div>
+              <div class="g-col-6 text-left">
+                <p class="md-exp__text " >500.000.000<span><img src="../static/imgs/price.png" alt=""></span></p>
+              </div>
+            </li>
+            <li class="md-exp__list-item grid">
+              <div class="g-col-6">
+                <p class="md-exp__text">پوشاک و لباس</p>
+                <p class="md-exp__subtitle">152 خرید</p>
+              </div>
+              <div class="g-col-6 text-left">
+                <p class="md-exp__text " >500.000.000<span><img src="../static/imgs/price.png" alt=""></span></p>
+              </div>
+            </li>
+          </ul>
+          </div>
+        </div>
+        <div class="g-col-3 md-exp">
+          <p class="md-exp__title">تاریخچه تراکنش ها</p>
+          <hr class="md-line">
+          <br>
+          <ul class="md-exp__list">
+            <li class="md-exp__list-item grid">
+              <div class="g-col-1">
+                <img src="../static/imgs/exp-icon.png" alt="">
+              </div>
+              <div class="g-col-6">
+                <p class="md-exp__text">پوشاک و لباس</p>
+                <p class="md-exp__subtitle">مخارج روزانه</p>
+              </div>
+              <div class="g-col-5 text-left">
+                <p class="md-exp__text " >500.000.000<span><img src="../static/imgs/price.png" alt=""></span></p>
+                <p class="md-exp__subtitle text-start">20 بهمن ماه</p>
+              </div>
+            </li>
+            <hr class="md-exp__line">
+            <li class="md-exp__list-item grid">
+              <div class="g-col-1">
+                <img src="../static/imgs/exp-icon.png" alt="">
+              </div>
+              <div class="g-col-6">
+                <p class="md-exp__text">پوشاک و لباس</p>
+                <p class="md-exp__subtitle">مخارج روزانه</p>
+              </div>
+              <div class="g-col-5 text-left">
+                <p class="md-exp__text " >500.000.000<span><img src="../static/imgs/price.png" alt=""></span></p>
+                <p class="md-exp__subtitle text-start">20 بهمن ماه</p>
+              </div>
+            </li>
+            <hr class="md-exp__line">
+            <li class="md-exp__list-item grid">
+              <div class="g-col-1">
+                <img src="../static/imgs/exp-icon.png" alt="">
+              </div>
+              <div class="g-col-6">
+                <p class="md-exp__text">پوشاک و لباس</p>
+                <p class="md-exp__subtitle">مخارج روزانه</p>
+              </div>
+              <div class="g-col-5 text-left">
+                <p class="md-exp__text " >500.000.000<span><img src="../static/imgs/price.png" alt=""></span></p>
+                <p class="md-exp__subtitle text-start">20 بهمن ماه</p>
+              </div>
+            </li>
+            <hr class="md-exp__line">
+            <li class="md-exp__list-item grid">
+              <div class="g-col-1">
+                <img src="../static/imgs/inc-icon.png" alt="">
+              </div>
+              <div class="g-col-6">
+                <p class="md-exp__text">پوشاک و لباس</p>
+                <p class="md-exp__subtitle">مخارج روزانه</p>
+              </div>
+              <div class="g-col-5 text-left">
+                <p class="md-exp__text " >500.000.000<span><img src="../static/imgs/price.png" alt=""></span></p>
+                <p class="md-exp__subtitle text-start">20 بهمن ماه</p>
+              </div>
+            </li>
+            <hr class="md-exp__line">
+          </ul>
+          <p class="trans-more">ادامه></p>
+        </div>
       </div>
-      <div class="feature feature--4">
-        <p class="text-center font-weight-bolder">دسته بندی بودجه</p>
-        <hr >
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">نام بودجه</th>
-              <th scope="col">مبلغ اولیه</th>
-              <th scope="col">مانده</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for transaction in budgetCats %}
-            <tr>
-              <td>{{ transaction.name }}</td>
-              <td class="price">{{ transaction.allocated }}</td>
-              <td class="price">{{ transaction.allocated|subtract:transaction.spent }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-
-    </section>
-
-  </main>
-  
-  <!-- Page footer -->
-  <footer>
-    <p>&copy; سرمایه بان 1402</p>  
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-    {% comment %} <script>
-      $('input.number').keyup(function(event) {
-
-        // skip for arrow keys
-        if(event.which >= 37 && event.which <= 40) return;
-      
-        // format number
-        $(this).val(function(index, value) {
-          return value
-          .replace(/\D/g, "")
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-          ;
-        });
-      });
-    </script> {% endcomment %}
-    <script>
-      // Select all elements with price class
-      const priceElements = document.querySelectorAll('.price');
-      
-      // Loop through each element
-      priceElements.forEach(price => {
-      
-        // Get inner text
-        let priceText = price.innerText;
-      
-        // Regex to separate numbers 
-        let regex = /\B(?=(\d{3})+(?!\d))/g;
-      
-        // Format price with commas
-        let formatted = priceText.replace(regex, ',');  
-      
-        // Update inner text
-        price.innerText = formatted;
-      
-      });
-      </script>
+    </div>
+    <!-- Main content -->
 
 
-  </footer>
+    <!-- Page footer -->
+    <footer>
+      <p>&copy; سرمایه بان 1402</p>
+    </footer>
 
 </body>
+
 </html>
