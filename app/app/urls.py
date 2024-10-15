@@ -7,7 +7,6 @@ from transactions.views import TransactionViewSet
 from budgets.views import BudgetViewSet, BudgetsCatgsViewSet
 from rest_framework.authtoken import views
 from accounts.views import UserLoginAPIView,RegisterView,CustomTokenObtainPairView
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 
 
@@ -33,6 +32,7 @@ urlpatterns = [
     path('api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('users/',include('accounts.urls')),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path("plot/", include("transactions.urls")),
 
 ]
 if settings.DEBUG:
