@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 import io
 import base64
 import urllib.parse
+from .task import add
+
 
 class TransactionViewSet(viewsets.ModelViewSet):
     queryset = Transaction.objects.all()
@@ -16,6 +18,8 @@ class TransactionViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     def perform_create(self, serializer):
         # Automatically set the user to the currently authenticated user
+
+        result = add.delay(4, 6)
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
