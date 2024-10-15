@@ -9,7 +9,8 @@ import matplotlib.pyplot as plt
 import io
 import base64
 import urllib.parse
-from .task import add
+from .task import add, send_email_fun
+from app import settings
 
 
 class TransactionViewSet(viewsets.ModelViewSet):
@@ -18,8 +19,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     def perform_create(self, serializer):
         # Automatically set the user to the currently authenticated user
-
-        result = add.delay(4, 6)
+        send_email_fun.delay("your_subject", "your_message", settings.EMAIL_HOST_USER, "behnam4854@gmail.com")
         serializer.save(user=self.request.user)
 
     def get_queryset(self):

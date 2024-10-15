@@ -2,3 +2,6 @@ celery
 redis
 flower
 django-celery-results
+django-redis
+celery -A <module> worker -l info -P eventlet
+eventlet
