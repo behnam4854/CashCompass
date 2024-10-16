@@ -2,7 +2,7 @@ from django.db.models import Count
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
-from .models import Transaction
+from .models import Transaction, RecurringTransaction
 from .serializers import TransactionSerializer
 # from .visulize_helper import analyze_data, plot_data
 import matplotlib.pyplot as plt
@@ -18,10 +18,8 @@ class TransactionViewSet(viewsets.ModelViewSet):
     serializer_class = TransactionSerializer
     permission_classes = [AllowAny]
     def perform_create(self, serializer):
-        # Automatically set the user to the currently authenticated user
-        send_email_fun.delay("your_subject", "your_message", settings.EMAIL_HOST_USER, "behnam4854@gmail.com")
+        # send_email_fun.delay("your_subject", "your_message", settings.EMAIL_HOST_USER, "behnam4854@gmail.com")
         serializer.save(user=self.request.user)
-
     def get_queryset(self):
         # Filter expenses to only show those belonging to the authenticated user
         return self.queryset.filter(user=self.request.user)
